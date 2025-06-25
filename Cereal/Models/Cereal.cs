@@ -3,7 +3,7 @@ using Cereal.Models.Types;
 
 namespace Cereal.Models
 {
-    public class Cereal
+    public class CerealEntity
     {
         public int Id { get; set; }
 

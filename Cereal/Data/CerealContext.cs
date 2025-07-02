@@ -31,7 +31,7 @@ namespace Cereal.Data
                                 return rawRow == 2; //Ignore second row of types
                             }
                             
-                        }; // Enums not translated
+                        }; 
                         CsvReader csvReader = new CsvReader(reader, config);
                         var cereals = csvReader.GetRecords<CerealEntity>().ToArray();
                         foreach (var cereal in cereals) 
@@ -43,8 +43,7 @@ namespace Cereal.Data
                             } 
                             else
                             {
-                                cereal.Id = existingCereal.Id;
-                                Cereals.Update(cereal);
+                                existingCereal = cereal; 
                             }
                         }
                         SaveChangesAsync();

@@ -1,4 +1,5 @@
 using Cereal.Data;
+using Cereal.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,7 @@ using (var context = new CerealContext())
 var services = builder.Services;
 
 services.AddTransient<ICerealContext, CerealContext>();
+services.AddTransient<ICerealService, CerealService>();
 
 var app = builder.Build();
 

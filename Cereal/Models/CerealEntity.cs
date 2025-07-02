@@ -7,10 +7,9 @@ namespace Cereal.Models
     public class CerealEntity
     {
 
-       [Ignore]
-        public int Id { get; set; }
+        [Ignore]
+        public int? Id { get; set; }
 
-        [Required]
         [Index(0)]
         public string Name { get; set; }
 

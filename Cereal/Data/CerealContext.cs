@@ -23,6 +23,7 @@ namespace Cereal.Data
                         var config = new CsvConfiguration(CultureInfo.InvariantCulture)
                         {
                             MissingFieldFound = null,
+                            Delimiter = ";",
                             PrepareHeaderForMatch = args => args.Header.ToLower(),
                             ShouldSkipRecord = args =>
                             {
@@ -30,7 +31,7 @@ namespace Cereal.Data
                                 return rawRow == 2; //Ignore second row of types
                             }
                             
-                        }; //Do not perceive Id? mfr not understood?
+                        }; // Enums not translated
                         CsvReader csvReader = new CsvReader(reader, config);
                         var cereals = csvReader.GetRecords<CerealEntity>().ToArray();
                         foreach (var cereal in cereals) 

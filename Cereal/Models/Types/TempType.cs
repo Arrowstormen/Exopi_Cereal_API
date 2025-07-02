@@ -2,7 +2,7 @@
 {
     public enum TempType
     {
-        Cold = 0,
-        Hot = 1,
+        C = 0, // Cold
+        H = 1, // Hot
     }
 }

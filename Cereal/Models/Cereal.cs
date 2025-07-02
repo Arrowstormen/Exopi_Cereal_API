@@ -6,6 +6,8 @@ namespace Cereal.Models
 {
     public class CerealEntity
     {
+
+       [Ignore]
         public int Id { get; set; }
 
         [Required]

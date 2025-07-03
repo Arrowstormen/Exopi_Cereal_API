@@ -11,6 +11,7 @@ namespace Cereal.Models
         public int? Id { get; set; }
 
         [Index(0)]
+        [Required]
         public string Name { get; set; }
 
         [Name("mfr")]
@@ -42,7 +43,7 @@ namespace Cereal.Models
 
         [Index(8)]
         //Grams
-        public float Carbo { get; set; }
+        public float     Carbo { get; set; }
 
         [Index(9)]
         //Grams

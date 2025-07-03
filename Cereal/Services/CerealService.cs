@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using System.Linq.Dynamic.Core;
 using System.Net;
 using Cereal.Data;
 using Cereal.Models;
@@ -28,28 +29,21 @@ namespace Cereal.Services
             return entity;
         }
 
-        public async Task<IEnumerable<CerealEntity>> GetFilteredCereals_SetValues(CerealEntity filter)
+        public async Task<IEnumerable<CerealEntity>> GetFilteredCereals_Predicate(string predicate)
         {
             return await Task.Run(() =>
-             {
-                var query = context.Cereals;
-
-                 foreach (var prop in filter.GetType().GetProperties())
-                 {
-                     query = (DbSet<CerealEntity>)query.Where(c => c.GetType().GetProperty(prop.Name.ToString()).GetValue(c, null) == prop.GetValue(filter, null));
-                 }
-
-                 return query.ToArray();
-             });
+            {
+                return context.Cereals.Where(predicate).ToArray();
+            });
         }
 
-        public async Task<(HttpStatusCode,int?)> CreateOrUpdateCereal(CerealEntity cereal)
+        public async Task<int?> CreateOrUpdateCereal(CerealEntity cereal)
         {
             if (cereal.Id == null)
             {
                 context.Cereals.Add(cereal);
                 await context.SaveChangesAsync();
-                return (HttpStatusCode.Created,cereal.Id);
+                return cereal.Id;
             }
             else
             {
@@ -60,9 +54,9 @@ namespace Cereal.Services
                     throw new Exception("No cereal with id " + cereal.Id + " currently exists. New cereals cannot include an id.");
                 }
 
-                entity = cereal;
+                context.Cereals.Update(entity).CurrentValues.SetValues(cereal);
                 await context.SaveChangesAsync();
-                return (HttpStatusCode.OK,cereal.Id);
+                return cereal.Id;
             }
         }
 

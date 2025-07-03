@@ -10,24 +10,24 @@ namespace Cereal.Controllers
     public class CerealController(ICerealService cerealService) : ControllerBase
     {
 
-        [HttpGet("All")]
+        [HttpGet("GetAll")]
         public async Task<IActionResult> GetAllCereals()
         {
             var result = await cerealService.GetAllCereals();
             return Ok(result);
         }
 
-        [HttpGet("{Id}")]
+        [HttpGet("GetById")]
         public async Task<IActionResult> GetCerealById(int id)
         {
             var result = await cerealService.GetCerealById(id);
             return Ok(result);
         }
 
-        [HttpGet("SetValues")]
-        public async Task<IActionResult> GetFilteredCereals_SetValues([FromQuery] CerealEntity filter)
+        [HttpGet("GetByPredicate")]
+        public async Task<IActionResult> GetFilteredCereals_Predicate([FromQuery] string predicate)
         {
-            var result = await cerealService.GetFilteredCereals_SetValues(filter);
+            var result = await cerealService.GetFilteredCereals_Predicate(predicate);
             return Ok(result);
         }
 

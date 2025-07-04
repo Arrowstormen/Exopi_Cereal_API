@@ -84,7 +84,15 @@ namespace Cereal.Services
                 throw new Exception("No cereal with id " + id + " currently exists.");
             }
 
-            var image = File.OpenRead("Cereal Pictures\\random_image.jpeg");
+            string directory = @"Cereal Pictures\";
+            var path = Directory.EnumerateFiles(directory, searchPattern: "*" + entity.Name + "*").FirstOrDefault();
+
+            if (path == null)
+            {
+                throw new Exception("No image with name " + entity.Name + " currently exists.");
+            }
+
+            var image = File.OpenRead(path);
             return image;
         }
     }

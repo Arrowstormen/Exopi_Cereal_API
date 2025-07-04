@@ -74,5 +74,14 @@ namespace Cereal.Services
             return HttpStatusCode.NoContent;
 
         }
+
+        public async Task<FileStream> GetImageByName(string name)
+        {
+            return await Task.Run(() =>
+            {
+                var image = File.OpenRead("C:\\test\\random_image.jpeg");
+                return image;
+            });
+        }
     }
 }

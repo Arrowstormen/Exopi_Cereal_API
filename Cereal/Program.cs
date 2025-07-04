@@ -1,5 +1,8 @@
+using Cereal.Authentication;
 using Cereal.Data;
 using Cereal.Services;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +11,37 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition(BasicAuthenticationDefaults.AuthenticationScheme,
+        new OpenApiSecurityScheme()
+        {
+            Name = "Authorization",
+            Type = SecuritySchemeType.Http,
+            Scheme = BasicAuthenticationDefaults.AuthenticationScheme,
+            In = ParameterLocation.Header,
+            Description = "Basic authorization header"
+        });
+
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = BasicAuthenticationDefaults.AuthenticationScheme
+                }
+            },
+            new string[] {"Basic "}
+        }
+    });
+});
+
+// https://www.roundthecode.com/dotnet-tutorials/what-is-basic-authentication-how-to-add-in-asp-net-core
+builder.Services.AddAuthentication()
+    .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>(BasicAuthenticationDefaults.AuthenticationScheme, null);
 
 builder.Services.AddDbContext<CerealContext>();
 using (var context = new CerealContext())

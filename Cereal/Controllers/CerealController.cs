@@ -1,4 +1,5 @@
 ﻿using System;
+using Cereal.Authentication;
 using Cereal.Models;
 using Cereal.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -31,14 +32,21 @@ namespace Cereal.Controllers
             return Ok(result);
         }
 
-        [HttpPost]
+        [HttpGet("GetImageByName")]
+        public async Task<IActionResult> GetImageByName([FromQuery] string name)
+        {
+            var image = await cerealService.GetImageByName(name);
+            return File(image, "image/jpeg");
+        }
+
+        [HttpPost, BasicAuthorization]
         public async Task<IActionResult> CreateOrUpdateCereal([FromBody] CerealEntity cereal)
         {
             var result = await cerealService.CreateOrUpdateCereal(cereal);
             return Ok(result);
         }
 
-        [HttpDelete]
+        [HttpDelete, BasicAuthorization]
         public async Task<IActionResult> DeleteCerealById(int id)
         {
             var result = await cerealService.DeleteCerealById(id);

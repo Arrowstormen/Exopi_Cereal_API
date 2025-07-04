@@ -32,10 +32,10 @@ namespace Cereal.Controllers
             return Ok(result);
         }
 
-        [HttpGet("GetImageByName")]
-        public async Task<IActionResult> GetImageByName([FromQuery] string name)
+        [HttpGet("GetImageById")]
+        public async Task<IActionResult> GetImageByName(int id)
         {
-            var image = await cerealService.GetImageByName(name);
+            var image = await cerealService.GetImageById(id);
             return File(image, "image/jpeg");
         }
 

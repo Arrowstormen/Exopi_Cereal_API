@@ -75,13 +75,17 @@ namespace Cereal.Services
 
         }
 
-        public async Task<FileStream> GetImageByName(string name)
+        public async Task<FileStream> GetImageById(int id)
         {
-            return await Task.Run(() =>
+            var entity = await context.Cereals.FirstOrDefaultAsync(c => c.Id == id);
+          
+            if (entity == null)
             {
-                var image = File.OpenRead("C:\\test\\random_image.jpeg");
-                return image;
-            });
+                throw new Exception("No cereal with id " + id + " currently exists.");
+            }
+
+            var image = File.OpenRead("Cereal Pictures\\random_image.jpeg");
+            return image;
         }
     }
 }

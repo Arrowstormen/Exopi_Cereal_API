@@ -33,7 +33,7 @@ namespace Cereal.Controllers
         }
 
         [HttpGet("GetImageById")]
-        public async Task<IActionResult> GetImageByName(int id)
+        public async Task<IActionResult> GetImageById(int id)
         {
             var image = await cerealService.GetImageById(id);
             return File(image, "image/jpeg");

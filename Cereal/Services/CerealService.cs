@@ -75,7 +75,7 @@ namespace Cereal.Services
 
         }
 
-        public async Task<FileStream> GetImageById(int id)
+        public async Task<FileStream> GetImageById(int id, string directory = @"Cereal Pictures\")
         {
             var entity = await context.Cereals.FirstOrDefaultAsync(c => c.Id == id);
           
@@ -84,7 +84,6 @@ namespace Cereal.Services
                 throw new Exception("No cereal with id " + id + " currently exists.");
             }
 
-            string directory = @"Cereal Pictures\";
             var path = Directory.EnumerateFiles(directory, searchPattern: "*" + entity.Name + "*").FirstOrDefault();
 
             if (path == null)

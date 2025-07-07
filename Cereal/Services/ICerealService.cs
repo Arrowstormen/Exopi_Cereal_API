@@ -13,7 +13,7 @@ namespace Cereal.Services
 
         public Task<IEnumerable<CerealEntity>> GetFilteredCereals_Predicate(string predicate);
 
-        public Task<FileStream> GetImageById(int id);
+        public Task<FileStream> GetImageById(int id, string directory =@"Cereal Pictures\");
 
         public Task<int?> CreateOrUpdateCereal(CerealEntity cereal);
 

@@ -43,7 +43,8 @@ namespace Cereal.Data
                             } 
                             else
                             {
-                                existingCereal = cereal; 
+                                cereal.Id = existingCereal.Id;
+                                Cereals.Entry(existingCereal).CurrentValues.SetValues(cereal);
                             }
                         }
                         SaveChangesAsync();

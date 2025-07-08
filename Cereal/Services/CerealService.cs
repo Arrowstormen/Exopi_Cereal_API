@@ -54,7 +54,7 @@ namespace Cereal.Services
                     throw new Exception("No cereal with id " + cereal.Id + " currently exists. New cereals cannot include an id.");
                 }
 
-                context.Cereals.Update(entity).CurrentValues.SetValues(cereal);
+                context.Cereals.Entry(entity).CurrentValues.SetValues(cereal);
                 await context.SaveChangesAsync();
                 return cereal.Id;
             }

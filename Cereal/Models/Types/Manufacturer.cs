@@ -1,13 +1,28 @@
-﻿namespace Cereal.Models.Types
+﻿using System.ComponentModel;
+
+namespace Cereal.Models.Types
 {
     public enum Manufacturer
     {
-        A = 0, // American Home Food Products
-        G = 1, // General Mills
-        K = 2, // Kelloggs
-        N = 3, // Nabisco
-        P = 4, // Post
-        Q = 5, // Quaker Oats
-        R = 6, // Ralston Purina
+        [Description("American Home Food Products")]
+        A = 0, 
+
+        [Description("General Mills")]
+        G = 1, 
+
+        [Description("Kelloggs")]
+        K = 2, 
+
+        [Description("Nabisco")]
+        N = 3, 
+
+        [Description("Post")]
+        P = 4, 
+
+        [Description("Quaker Oats")]
+        Q = 5, 
+
+        [Description("Ralston Purina")]
+        R = 6, 
     }
 }

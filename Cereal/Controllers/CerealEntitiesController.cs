@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Cereal.Data;
 using Cereal.Models;
+using Cereal.Authentication;
 
 namespace Cereal.Controllers
 {
@@ -52,7 +53,7 @@ namespace Cereal.Controllers
         // POST: CerealEntities/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost, BasicAuthorization]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Manufacturer,Type,Calories,Protein,Fat,Sodium,Fiber,Carbo,Sugars,Potass,Vitamins,Shelf,Weight,Cups,Rating")] CerealEntity cerealEntity)
         {
@@ -84,7 +85,7 @@ namespace Cereal.Controllers
         // POST: CerealEntities/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost, BasicAuthorization]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int? id, [Bind("Id,Name,Manufacturer,Type,Calories,Protein,Fat,Sodium,Fiber,Carbo,Sugars,Potass,Vitamins,Shelf,Weight,Cups,Rating")] CerealEntity cerealEntity)
         {
@@ -135,7 +136,7 @@ namespace Cereal.Controllers
         }
 
         // POST: CerealEntities/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, BasicAuthorization, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int? id)
         {

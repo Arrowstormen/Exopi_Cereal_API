@@ -8,22 +8,39 @@ using Microsoft.EntityFrameworkCore;
 using Cereal.Data;
 using Cereal.Models;
 using Cereal.Authentication;
+using Cereal.Services;
+using System.Linq.Dynamic.Core;
 
 namespace Cereal.Controllers
 {
     public class CerealEntitiesController : Controller
     {
         private readonly CerealContext _context;
+        private readonly ICerealService _cerealService;
 
-        public CerealEntitiesController(CerealContext context)
+        public CerealEntitiesController(CerealContext context, ICerealService cerealService)
         {
             _context = context;
+            _cerealService = cerealService;
         }
 
         // GET: CerealEntities
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string predicate)
         {
-            return View(await _context.Cereals.ToListAsync());
+            if (_context.Cereals == null)
+            {
+                return Problem("Entity set 'CerealContext.Cereals'  is null.");
+            }
+
+            var cereals = from c in _context.Cereals
+                         select c;
+
+            if (!String.IsNullOrEmpty(predicate))
+            {
+                cereals = cereals.Where(predicate);
+            }
+
+            return View(await cereals.ToListAsync());
         }
 
         // GET: CerealEntities/Details/5
@@ -53,7 +70,7 @@ namespace Cereal.Controllers
         // POST: CerealEntities/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost, BasicAuthorization]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Manufacturer,Type,Calories,Protein,Fat,Sodium,Fiber,Carbo,Sugars,Potass,Vitamins,Shelf,Weight,Cups,Rating")] CerealEntity cerealEntity)
         {
@@ -85,7 +102,7 @@ namespace Cereal.Controllers
         // POST: CerealEntities/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost, BasicAuthorization]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int? id, [Bind("Id,Name,Manufacturer,Type,Calories,Protein,Fat,Sodium,Fiber,Carbo,Sugars,Potass,Vitamins,Shelf,Weight,Cups,Rating")] CerealEntity cerealEntity)
         {
@@ -136,7 +153,7 @@ namespace Cereal.Controllers
         }
 
         // POST: CerealEntities/Delete/5
-        [HttpPost, BasicAuthorization, ActionName("Delete")]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int? id)
         {

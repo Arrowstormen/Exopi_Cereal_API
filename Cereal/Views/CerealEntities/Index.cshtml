@@ -9,9 +9,18 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+<form asp-controller="CerealEntities" asp-action="Index" method="get">
+    <p>
+        <label>Predicate: <input type="text" name="predicate" /></label>
+        <input type="submit" value="Filter" />
+    </p>
+</form>
 <table class="table">
     <thead>
         <tr>
+            <th>
+                @Html.Raw("Image")
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
@@ -66,6 +75,9 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                <img src="@Url.Content("~/Cereal%Pictures/100%Bran.jpg")" alt="Image" />
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>

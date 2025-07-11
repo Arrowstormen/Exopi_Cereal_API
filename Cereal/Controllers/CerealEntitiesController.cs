@@ -40,6 +40,7 @@ namespace Cereal.Controllers
                 cereals = cereals.Where(predicate);
             }
 
+
             return View(await cereals.ToListAsync());
         }
 

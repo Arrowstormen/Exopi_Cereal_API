@@ -43,7 +43,7 @@ namespace Cereal.Models
 
         [Index(8)]
         //Grams
-        public float     Carbo { get; set; }
+        public float Carbo { get; set; }
 
         [Index(9)]
         //Grams
